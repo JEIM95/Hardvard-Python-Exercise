@@ -1,21 +1,37 @@
-element = input("Input: ")
+def main():
+    element = input("Input: ")
+    
+    solution = ""
 
-vowels = ("aeiouAEIOU")
+    solution = shorten(element)
+    print ("Output:", solution)
 
-solution = ""
+def shorten(word):
+    solution = ""
+    vowels = ("aeiouAEIOU")
 
-for n in element:
+    for n in word:
+        letter = False
 
-    letter = False
+        for x in vowels:
+            if n == x:
+                letter = True
 
-    for x in vowels:
-        if n == x:
-            letter = True
+        if letter == False:
+            solution = solution + n
+        else:
+            solution = solution + ""
+    
+    return solution
 
-    if letter == False:
-        solution = solution + n
-    else:
-        solution = solution + ""
+if __name__ == "__main__":
+    main()
 
 
-print ("Output:", solution)
+
+
+
+
+
+
+
