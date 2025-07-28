@@ -18,8 +18,6 @@ def main():
     today = date.today()
     day_of_year_birth = object_date.timetuple() #Da una tupla con información. Interesa puesto 7. Dia del año
     day_of_current_day = today.timetuple() 
-    print(day_of_current_day[7])
-    print(day_of_year_birth[7])
 
     #Primero ver los años completos
     total_year = (today.year - 1) - (object_date.year + 1) 
@@ -45,7 +43,7 @@ def main():
     #Calculamos el número total de días y los minutos que son
     total_days = (No_leap_year * 365) + (total_year_leap * 366) + n_days_birth + day_of_current_day[7] 
     total_minutes = total_days * 24 * 60
-    print(p.number_to_words(total_minutes))
+    print(f"{p.number_to_words(total_minutes)} minutes")
 
 def check_date(date):
     valid = False
