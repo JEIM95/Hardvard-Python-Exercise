@@ -3,7 +3,7 @@ prize_coke = 50
 print ("Amaunt Due: ", prize_coke)
 
 while prize_coke > 0:
-    coin = int(input("Insert Coin: "))
+    coin = int(input())
 
     match coin:
         case 25:
@@ -14,8 +14,9 @@ while prize_coke > 0:
             prize_coke = prize_coke - 5   
     
     if prize_coke <= 0:
-        print("Change Owed: 0")
+        print("Change Owed:", abs(prize_coke))
     else:
         print("Amaunt Due: ", prize_coke)
 
 
+#Insert Coin: 
