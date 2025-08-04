@@ -1,7 +1,6 @@
 import sys
 from PIL import Image, ImageOps
 
-
 def main():
     correct = check_arguments(sys.argv)
     
@@ -11,12 +10,14 @@ def main():
                 shirt = shirt.convert("RGBA")
                 person = person.convert("RGBA")
                 
+                #cut image
+                cut_image = person.crop((0, 190, 1200, 1400))
                 #Reescalate
-                reescalate = ImageOps.fit(shirt,[1000,1100])
+                reescalate_person = ImageOps.pad(cut_image,(600,600))
 
-                person.paste(reescalate, (100,280), reescalate)
-                person = person.convert("RGB")
-                person.save(sys.argv[2])
+                reescalate_person.paste(shirt, (0,0), shirt)
+                reescalate_person = reescalate_person.convert("RGB")
+                reescalate_person.save(sys.argv[2])
 
         except FileNotFoundError:
             sys.exit("File does not exist")  
