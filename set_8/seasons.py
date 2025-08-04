@@ -20,11 +20,11 @@ def main():
     day_of_current_day = today.timetuple() 
 
     #Primero ver los años completos
-    total_year = (today.year - 1) - (object_date.year + 1) 
+    total_year = today.year - object_date.year - 1
     
     #De los completos cuantos son bisiestos
     total_year_leap = 0
-    for n in range(1, total_year):
+    for n in range(1, total_year + 1):
         year = object_date.year + n #Calculamos el año
         year_leap = leap_year(year) #Llamamos a la función 
         if year_leap == True:
@@ -43,7 +43,7 @@ def main():
     #Calculamos el número total de días y los minutos que son
     total_days = (No_leap_year * 365) + (total_year_leap * 366) + n_days_birth + day_of_current_day[7] 
     total_minutes = total_days * 24 * 60
-    print(f"{p.number_to_words(total_minutes)} minutes")
+    print(f"{p.number_to_words(total_minutes).capitalize()} minutes")
 
 def check_date(date):
     valid = False

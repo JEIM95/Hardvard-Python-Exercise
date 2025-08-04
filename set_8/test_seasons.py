@@ -10,10 +10,10 @@ def test_check_date_ok():
     #seasons.check_date("coche") == "Invalid date"
 
 def test_leap_year():
-    assert seasons.leap_year(1995) == "False"
-    assert seasons.leap_year(2000) == "True"
-    assert seasons.leap_year(2004) == "True"
-    assert seasons.leap_year(1999) == "False"
+    assert seasons.leap_year(1995) == False
+    assert seasons.leap_year(2000) == True
+    assert seasons.leap_year(2004) == True
+    assert seasons.leap_year(1999) == False
 
 def test_convert_int():
     assert seasons.convert_int(["1999","02","08"]) == [1999,2,8]
