@@ -16,7 +16,7 @@ while prize_coke > 0:
     if prize_coke <= 0:
         print("Change Owed:", abs(prize_coke))
     else:
-        print("Amaunt Due: ", prize_coke)
+        print("Amount Due:", prize_coke)
 
 
 #Insert Coin: 
