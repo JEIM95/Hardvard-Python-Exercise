@@ -13,7 +13,7 @@ from datetime import date
             -c: concepto  "El concepto que queremos"   -v: valor   "Ingreso/gasto que queremos meter"
 
         Ejemplo de lectura: python project.py -r Full
-                            python project.py -r 2025-08-02 (Muestra desde el 2 de Agosto hasta el último que tenga registrado)
+                            python project.py -r 2025-08-02 (Muestra el de ese día)
         
         Ejemplo de escritura: python project.py -w -c Nomina -v 2000
 """
@@ -72,12 +72,19 @@ def Save_CSV():
 
 def Show_CSV(x):
     global financials
+    find = False
 
     if x == "Full":
         for financial in financials:
             print(f"fecha: {financial["fecha"]}, Concepto: {financial["concepto"]}, ingresos/gastos: {financial["ingresos/gastos"]}, balance: {financial["balance"]}")
     else:
-        print("Pendiente")
+        for financial in financials:
+            if financial["fecha"] == x:
+                find = True
+                print(f"fecha: {financial["fecha"]}, Concepto: {financial["concepto"]}, ingresos/gastos: {financial["ingresos/gastos"]}, balance: {financial["balance"]}")
+        if find == False:
+            print(f"No movements this day: {x}")   
+
 
 def Write_CSV(concept, n):
     global financials
