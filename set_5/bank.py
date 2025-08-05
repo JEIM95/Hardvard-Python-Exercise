@@ -1,18 +1,29 @@
 def main():
-    greeting = input("Greeting: ")
+    try:
+        greeting = input("Greeting: ")
 
-    print(value(greeting))
-
+        if not isinstance(greeting, str):
+            raise AttributeError("You have to introduce string value")
+        if greeting == "":
+            raise EOFError
+        
+        print(value(greeting))
+    except EOFError:
+        pass
+    except AttributeError:
+        pass
 
 def value(greeting):
-    greeting = greeting.strip().capitalize()
-    if greeting[0] == "H" and greeting[1] == "e" and greeting[2] == "l" and greeting[3] == "l" and greeting[4] == "o":
+    if not isinstance(greeting, str):
+        raise AttributeError("You have to introduce string value")
+    
+    greeting = greeting.strip().lower()
+    if greeting.startswith("hello"):
         price = "$0"
+    elif greeting.startswith("h"):
+        price = "$20"
     else:
-        if greeting[0] == "H":
-            price = "$20"
-        else:
-            price ="$100"
+        price ="$100"
     return price
 
 if __name__ == "__main__":
