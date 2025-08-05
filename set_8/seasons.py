@@ -43,7 +43,7 @@ def main():
     #Calculamos el número total de días y los minutos que son
     total_days = (No_leap_year * 365) + (total_year_leap * 366) + n_days_birth + day_of_current_day[7] 
     total_minutes = total_days * 24 * 60
-    print(f"{p.number_to_words(total_minutes).capitalize()} minutes")
+    print(f"{p.number_to_words(total_minutes, andword="").capitalize()} minutes")
 
 def check_date(date):
     valid = False

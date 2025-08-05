@@ -23,6 +23,4 @@ def main():
     
     pdf.output("shirtificate.pdf")
 
-
-
 main()
