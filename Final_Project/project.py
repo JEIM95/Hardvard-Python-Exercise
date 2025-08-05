@@ -5,6 +5,17 @@ from datetime import date
 """
     This project enables you to track and store your financial transactions in a CSV file. 
     Based on your input, you can update your name, record income, expenses, and other financial activities.
+    Para ejecutar el programa debemos hacer lo siguiente. Python projec.py + argumentos
+    El primer argumento: -r: Lectura  -w: Escritura
+    El segundo argumento: 
+        Si estamos en lectura (-r): Full: Ver todo el CSV    yyyy-mm-dd: Fecha concreta para ver desde ahí en adelante
+        Si estamos en escritura (-w): En este caso tenemos que añadir 4 argumentos más. El orden es el siguiente:
+            -c: concepto  "El concepto que queremos"   -v: valor   "Ingreso/gasto que queremos meter"
+
+        Ejemplo de lectura: python project.py -r Full
+                            python project.py -r 2025-08-02 (Muestra desde el 2 de Agosto hasta el último que tenga registrado)
+        
+        Ejemplo de escritura: python project.py -w -c Nomina -v 2000
 """
 #Variables globales
 financials = []
@@ -12,21 +23,44 @@ financials = []
 def main():
     global financials
 
-    #Función para guarda CSV en una lista de diccionarios
-    Read_CSV()
+    if len(sys.argv) < 2:
+        sys.exit("Few arguments")
+    else:
+        if not sys.argv[1] == "-r" and not sys.argv[1] == "-w":
+            sys.exit("First argument is not -r or -w")
+        else:
+            if sys.argv[1] == "-r" and len(sys.argv) == 3:
+                #Check keyword is correct
+                Result = Check_reading_values(sys.argv[2].capitalize())
 
-    for financial in financials:
-        print(f"fecha: {financial["fecha"]}, Concepto: {financial["concepto"]}, ingresos/gastos: {financial["ingresos/gastos"]}, balance: {financial["balance"]}")
+                if Result == True:
+                    match sys.argv[2].capitalize():
+                        case "Full":
+                            Save_CSV() #Save CSV in list of dictionary
+                            Show_CSV("Full") #Show CSV
+                        case _:
+                            Save_CSV()
+                            Show_CSV(sys.argv[2])
+            elif sys.argv[1] == "-r" and len(sys.argv) != 3:
+                sys.exit("argument no valid")
 
-    concept = input("Introduce el concepto: ")
-    valor = input("Introduce ingresos/gastos: ")
+
+            elif sys.argv[1] == "-w" and len(sys.argv) == 6:
+                print("Entre en lectura")
+            elif sys.argv[1] == "-w" and len(sys.argv) != 6:
+                sys.exit("argument no valid")
+
+    #concept = input("Introduce el concepto: ")
+    #valor = input("Introduce ingresos/gastos: ")
 
     #Comprobamos que el valor introducido es un número
-    Control_input(valor)
+    #Control_input_number(valor)
 
-    Write_CSV(concept, valor)
+    #Función para escribir en el CSV
+    #Write_CSV(concept, valor)
 
-def Read_CSV():
+
+def Save_CSV():
     global financials
     financials = []
 
@@ -35,6 +69,15 @@ def Read_CSV():
         for row in reader:
             financials.append({"fecha": row["fecha"], "concepto": row["concepto"], "ingresos/gastos": row["ingresos/gastos"], "balance": row["balance"]})
   
+
+def Show_CSV(x):
+    global financials
+
+    if x == "Full":
+        for financial in financials:
+            print(f"fecha: {financial["fecha"]}, Concepto: {financial["concepto"]}, ingresos/gastos: {financial["ingresos/gastos"]}, balance: {financial["balance"]}")
+    else:
+        print("Pendiente")
 
 def Write_CSV(concept, n):
     global financials
@@ -69,12 +112,37 @@ def Write_CSV(concept, n):
         writer.writerows(financials)
 
 
-def Control_input(x):
+def Control_input_number(x):
     try:
         numero = int(x)
     except ValueError:
         sys.exit("Value is not a number")
-       
+
+
+def Check_reading_values(x):
+    valid = False
+
+    if x == "Full":
+        valid = True
+    elif not x == "Full":
+        components = []
+        components = x.split("-")
+        
+        try:
+            if len(components[0]) == 4 and len(components[1]) == 2 and len(components[2]) == 2:
+                for n in range(0, len(components)):
+                    components_num = int(components[n])
+                valid = True
+            else:
+                valid = False
+                raise ValueError 
+        except ValueError:
+            sys.exit("Invalid date")
+        except IndexError:
+            sys.exit("Invalid date")
+    
+    return valid
+
 
 
 if __name__ == "__main__":
