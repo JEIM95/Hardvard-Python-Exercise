@@ -20,7 +20,10 @@ def main():
 
     concept = input("Introduce el concepto: ")
     valor = input("Introduce ingresos/gastos: ")
-    #Hacer función de control de datos
+
+    #Comprobamos que el valor introducido es un número
+    Control_input(valor)
+
     Write_CSV(concept, valor)
 
 def Read_CSV():
@@ -65,6 +68,13 @@ def Write_CSV(concept, n):
         writer.writeheader()
         writer.writerows(financials)
 
+
+def Control_input(x):
+    try:
+        numero = int(x)
+    except ValueError:
+        sys.exit("Value is not a number")
+       
 
 
 if __name__ == "__main__":
