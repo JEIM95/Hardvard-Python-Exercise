@@ -9,13 +9,13 @@ def main():
     #Check user introduce correct format
     if len(sys.argv) != 2:
         print("Missing command-line argument")
-        sys.exit()
+        sys.exit(1)
     else:
         try:
             number = float(sys.argv[1])
         except ValueError:
             print("Command-line argument is not a number")
-            sys.exit()
+            sys.exit(1)
     
     #Call API
     response = requests.get("https://rest.coincap.io/v3/assets/bitcoin?apiKey=edaf4182d5c33e661e400a54521ac353707ff59b6d4331b694519f3307714343")
