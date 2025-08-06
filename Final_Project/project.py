@@ -31,9 +31,9 @@ def main():
         else:
             if sys.argv[1] == "-r" and len(sys.argv) == 3:
                 #Check keyword is correct
-                Result = Check_reading_values(sys.argv[2].capitalize())
+                Result_reading = Check_reading_values(sys.argv[2].capitalize())
 
-                if Result == True:
+                if Result_reading == True:
                     match sys.argv[2].capitalize():
                         case "Full":
                             Save_CSV() #Save CSV in list of dictionary
@@ -46,15 +46,12 @@ def main():
 
 
             elif sys.argv[1] == "-w" and len(sys.argv) == 6:
-                print("Entre en lectura")
+                Result_writing = Check_writing_values(sys.argv[2], sys.argv[4], sys.argv[5])
+                if Result_writing == True:
+                    Write_CSV(sys.argv[3], sys.argv[5]) #Concept, value
+
             elif sys.argv[1] == "-w" and len(sys.argv) != 6:
                 sys.exit("argument no valid")
-
-    #concept = input("Introduce el concepto: ")
-    #valor = input("Introduce ingresos/gastos: ")
-
-    #Comprobamos que el valor introducido es un número
-    #Control_input_number(valor)
 
     #Función para escribir en el CSV
     #Write_CSV(concept, valor)
@@ -88,8 +85,8 @@ def Show_CSV(x):
 
 def Write_CSV(concept, n):
     global financials
-    #Primero guardar CSV en lista de diccionarios
-    #Read_CSV()
+    #Save CSV in list of dictionary
+    Save_CSV()
     
     try:
         ultimo_balance = financials[-1]["balance"]
@@ -119,13 +116,6 @@ def Write_CSV(concept, n):
         writer.writerows(financials)
 
 
-def Control_input_number(x):
-    try:
-        numero = int(x)
-    except ValueError:
-        sys.exit("Value is not a number")
-
-
 def Check_reading_values(x):
     valid = False
 
@@ -150,6 +140,22 @@ def Check_reading_values(x):
     
     return valid
 
+
+def Check_writing_values(a, b, c):
+    #a -> Have to -c
+    #b -> Have to -v
+    #c -> Have to a number
+
+    try:
+        if a == "-c" and b == "-v":
+            value = int(c)
+        else:
+            sys.exit("Some argument is not correct")
+    
+    except ValueError:
+        sys.exit("Last argument is not a number")
+    
+    return True
 
 
 if __name__ == "__main__":
