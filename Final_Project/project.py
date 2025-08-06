@@ -5,7 +5,7 @@ from datetime import date
 """
     This project enables you to track and store your financial transactions in a CSV file. 
     Based on your input, you can update your name, record income, expenses, and other financial activities.
-    Para ejecutar el programa debemos hacer lo siguiente. Python projec.py + argumentos
+    To run programm. Python projec.py + argumentos
     First argument: -r: Read  -w: Write  -a: Average
     Second argument: 
         When we are reading (-r): Full: See all CSV    yyyy-mm-dd: Exactly date to see 
@@ -35,42 +35,39 @@ def main():
             #Reading calculate
             if sys.argv[1] == "-r" and len(sys.argv) == 3:
                 #Check keyword is correct
-                Result_reading = Check_reading_values(sys.argv[2].capitalize())
+                Result_reading = check_reading_values(sys.argv[2].capitalize())
 
                 if Result_reading == True:
                     match sys.argv[2].capitalize():
                         case "Full":
-                            Save_CSV() #Save CSV in list of dictionary
-                            Show_CSV("Full") #Show CSV
+                            save_csv() #Save CSV in list of dictionary
+                            show_csv("Full") #Show CSV
                         case _:
-                            Save_CSV()
-                            Show_CSV(sys.argv[2])
+                            save_csv()
+                            show_csv(sys.argv[2])
             elif sys.argv[1] == "-r" and len(sys.argv) != 3:
                 sys.exit("argument no valid")
 
             #Writing calculate
             elif sys.argv[1] == "-w" and len(sys.argv) == 6:
-                Result_writing = Check_writing_values(sys.argv[2], sys.argv[4], sys.argv[5])
+                Result_writing = check_writing_values(sys.argv[2], sys.argv[4], sys.argv[5])
                 if Result_writing == True:
-                    Write_CSV(sys.argv[3], sys.argv[5]) #Concept, value
+                    write_csv(sys.argv[3], sys.argv[5]) #Concept, value
 
             elif sys.argv[1] == "-w" and len(sys.argv) != 6:
                 sys.exit("argument no valid")
             
             #Average calculate
             elif sys.argv[1] == "-a" and len(sys.argv) == 3:
-                Result_average = Check_date(sys.argv[2])
+                Result_average = check_date(sys.argv[2])
                 if Result_average == True:
                     average = arithmetic_mean(sys.argv[2])
                     print(f"The arithmetic mean in date: {sys.argv[2]} is: {average}")
             elif sys.argv[1] == "-a" and len(sys.argv) != 3:
                 sys.exit("argument no valid")
 
-    #Función para escribir en el CSV
-    #Write_CSV(concept, valor)
-
 #save CSV in list of dictionery
-def Save_CSV():
+def save_csv():
     global financials
     financials = []
 
@@ -80,7 +77,7 @@ def Save_CSV():
             financials.append({"fecha": row["fecha"], "concepto": row["concepto"], "ingresos/gastos": row["ingresos/gastos"], "balance": row["balance"]})
   
 #Show CSV
-def Show_CSV(x):
+def show_csv(x):
     global financials
     find = False
 
@@ -96,10 +93,10 @@ def Show_CSV(x):
             print(f"No movements this day: {x}")   
 
 #Wite in CSV
-def Write_CSV(concept, n):
+def write_csv(concept, n):
     global financials
     #Save CSV in list of dictionary
-    Save_CSV()
+    save_csv()
     
     try:
         ultimo_balance = financials[-1]["balance"]
@@ -129,18 +126,18 @@ def Write_CSV(concept, n):
         writer.writerows(financials)
 
 #Checking arguments when you want read CSV
-def Check_reading_values(x):
+def check_reading_values(x):
     valid = False
 
     if x == "Full":
         valid = True
     elif not x == "Full":
-       valid = Check_date(x)
+       valid = check_date(x)
     
     return valid
 
 
-def Check_date(x):
+def check_date(x):
     components = []
     components = x.split("-")
         
@@ -160,7 +157,7 @@ def Check_date(x):
     return valid
 
 #Checking arguments when you want write CSV
-def Check_writing_values(a, b, c):
+def check_writing_values(a, b, c):
     #a -> Have to -c
     #b -> Have to -v
     #c -> Have to a number
@@ -180,7 +177,7 @@ def Check_writing_values(a, b, c):
 def values_to_average(a): #a is a date
     global financials
     
-    Save_CSV()
+    save_csv()
 
     find = False
     list_money = []
