@@ -10,12 +10,9 @@ def main():
                 shirt = shirt.convert("RGBA")
                 person = person.convert("RGBA")
                 
-                #cut image
-                cut_image = person.crop((0, 190, 1200, 1400))
-                #Reescalate
-                reescalate_person = ImageOps.pad(cut_image,(600,600))
+                reescalate_person = ImageOps.fit(person, shirt.size)
 
-                reescalate_person.paste(shirt, (0,0), shirt)
+                reescalate_person.paste(shirt, shirt)
                 reescalate_person = reescalate_person.convert("RGB")
                 reescalate_person.save(sys.argv[2])
 
@@ -34,8 +31,8 @@ def check_arguments(argument):
         sys.exit("Invalid input")
     
     #Check same extension
-    name1, extension1 = argument[1].split(".")
-    name2, extension2 = argument[2].split(".")
+    extension1 = argument[1].split(".")[1] #Esto hace que solo guarde la segunda parte
+    extension2 = argument[2].split(".")[1]
 
     if extension1 != extension2:
         sys.exit("Input and output have different extension")
