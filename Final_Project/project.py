@@ -4,24 +4,6 @@ import csv
 import sys
 from datetime import date
 
-
-"""
-    This project enables you to track and store your financial transactions in a CSV file. 
-    To run programm. Python projec.py + argument
-    First argument: -r: Read  -w: Write  -a: Average -h: help
-    Second argument: 
-        When we are reading (-r): Full: See all CSV    yyyy-mm-dd: Exactly date to see 
-        When we are wrinting (-w): In this case we add 4 more arguments. The position is:
-            -c: concept  "Concept"   -v: value   "earn/spend money"
-        When we are calculating average: yyyy-mm-dd: Exactly date to calculate
-
-        Reading example: python project.py -r Full
-                         python project.py -r 2025-08-02
-        
-        Writing example: python project.py -w -c Nomina -v 2000
-
-        Average example: python project.py -a 2025-08-06
-"""
 #Global 
 financials = []
 
