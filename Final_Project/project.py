@@ -1,12 +1,14 @@
+#                                                                                       Finance Diary
+
 import csv
 import sys
 from datetime import date
 
+
 """
     This project enables you to track and store your financial transactions in a CSV file. 
-    Based on your input, you can update your name, record income, expenses, and other financial activities.
-    To run programm. Python projec.py + argumentos
-    First argument: -r: Read  -w: Write  -a: Average
+    To run programm. Python projec.py + argument
+    First argument: -r: Read  -w: Write  -a: Average -h: help
     Second argument: 
         When we are reading (-r): Full: See all CSV    yyyy-mm-dd: Exactly date to see 
         When we are wrinting (-w): In this case we add 4 more arguments. The position is:
@@ -14,17 +16,21 @@ from datetime import date
         When we are calculating average: yyyy-mm-dd: Exactly date to calculate
 
         Reading example: python project.py -r Full
-                         python project.py -r 2025-08-02 (Muestra el de ese día)
+                         python project.py -r 2025-08-02
         
         Writing example: python project.py -w -c Nomina -v 2000
 
         Average example: python project.py -a 2025-08-06
 """
-#Variables globales
+#Global 
 financials = []
 
 def main():
     global financials
+    
+    if sys.argv[1] == "-h":
+        help_fuction()
+        sys.exit()
 
     if len(sys.argv) < 2:
         sys.exit("Few arguments")
@@ -62,7 +68,7 @@ def main():
                 Result_average = check_date(sys.argv[2])
                 if Result_average == True:
                     average = arithmetic_mean(sys.argv[2])
-                    print(f"The arithmetic mean in date: {sys.argv[2]} is: {average}")
+                    print(f"The arithmetic mean in date: {sys.argv[2]} is: {average}€")
             elif sys.argv[1] == "-a" and len(sys.argv) != 3:
                 sys.exit("argument no valid")
 
@@ -74,7 +80,7 @@ def save_csv():
     with open("financial.csv", "r") as file:
         reader = csv.DictReader(file)
         for row in reader:
-            financials.append({"fecha": row["fecha"], "concepto": row["concepto"], "ingresos/gastos": row["ingresos/gastos"], "balance": row["balance"]})
+            financials.append({"date": row["date"], "concept": row["concept"], "income/expenses": row["income/expenses"], "balance": row["balance"]})
   
 #Show CSV
 def show_csv(x):
@@ -83,12 +89,12 @@ def show_csv(x):
 
     if x == "Full":
         for financial in financials:
-            print(f"fecha: {financial["fecha"]}, Concepto: {financial["concepto"]}, ingresos/gastos: {financial["ingresos/gastos"]}, balance: {financial["balance"]}")
+            print(f"date: {financial["date"]}, Concept: {financial["concept"]}, income/expenses: {financial["income/expenses"]}€, balance: {financial["balance"]}€")
     else:
         for financial in financials:
-            if financial["fecha"] == x:
+            if financial["date"] == x:
                 find = True
-                print(f"fecha: {financial["fecha"]}, Concepto: {financial["concepto"]}, ingresos/gastos: {financial["ingresos/gastos"]}, balance: {financial["balance"]}")
+                print(f"date: {financial["date"]}, Concept: {financial["concept"]}, income/expenses: {financial["income/expenses"]}€, balance: {financial["balance"]}€")
         if find == False:
             print(f"No movements this day: {x}")   
 
@@ -113,14 +119,14 @@ def write_csv(concept, n):
 
     financials.append(
                 {
-                    "fecha":date_today, 
-                    "concepto":concept, 
-                    "ingresos/gastos":valor, 
+                    "date":date_today, 
+                    "concept":concept, 
+                    "income/expenses":valor, 
                     "balance":total
                 }
             )
     with open("financial.csv", "w", newline = "") as file:
-        writer = csv.DictWriter(file, fieldnames=["fecha", "concepto", "ingresos/gastos", "balance"])
+        writer = csv.DictWriter(file, fieldnames=["date", "concept", "income/expenses", "balance"])
         
         writer.writeheader()
         writer.writerows(financials)
@@ -183,9 +189,9 @@ def values_to_average(a): #a is a date
     list_money = []
 
     for financial in financials:
-        if financial["fecha"] == a:
+        if financial["date"] == a:
             find = True
-            list_money.append(financial["ingresos/gastos"])
+            list_money.append(financial["income/expenses"])
     
     if find == False:
         sys.exit(f"No movements this day: {a}") 
@@ -205,6 +211,25 @@ def arithmetic_mean(x): #x is a date
     
     return round(average,2)
 
+
+def help_fuction():
+    print("This project enables you to track and store your financial transactions in a CSV file.\n" 
+    "\nTo run programm. Python projec.py + argument\n"
+    "\nFirst argument: -r: Read  -w: Write  -a: Average -h: help\n"
+    "Second argument:\n" 
+        "\tWhen we are reading (-r): Full: See all CSV    yyyy-mm-dd: Exactly date to see\n"
+        "\tWhen we are wrinting (-w): In this case we add 4 more arguments. The position is:\n"
+            "\t\t-c: concept  'Concept'   -v: value   'earn/spend money'\n"
+        "\tWhen we are calculating average: yyyy-mm-dd: Exactly date to calculate\n"
+
+    "\nReading example: python project.py -r Full\n"
+    "\tpython project.py -r 2025-08-02\n"
+        
+    "\nWriting example: python project.py -w -c Nomina -v 2000\n"
+
+    "\nAverage example: python project.py -a 2025-08-06\n"
+    
+    )
 
 
 if __name__ == "__main__":

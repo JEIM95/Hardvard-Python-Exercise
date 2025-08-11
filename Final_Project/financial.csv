@@ -1,7 +1,15 @@
-fecha,concepto,ingresos/gastos,balance
+date,concept,income/expenses,balance
 2025-08-06,Nomina,2000,2000
 2025-08-06,coche,-500,1500
 2025-08-06,camisa,-30,1470
-2025-08-06,lotería,500,1970
+2025-08-06,loterï¿½a,500,1970
 2025-08-06,seguro,-100,1870
 2025-08-06,nomina,2000,3870
+2025-08-11,cine,-25,3845
+2025-08-11,cena,-50,3795
+2025-08-11,parking,-5,3790
+2025-08-11,Work,800,4590
+2025-08-11,clothes,-100,4490
+2025-08-11,lotery,700,5190
+2025-08-11,dinner,-70,5120
+2025-08-11,lunch,-60,5060
